@@ -2,6 +2,8 @@ import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from 'react-
 import { styles } from './styles'
 import { Participant } from '../../components/Participant';
 import { useState } from 'react';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 export function Home() {
   const [participants, setPariticpants] = useState<string[]>([])
@@ -26,13 +28,21 @@ export function Home() {
         style: 'cancel'
       }
     ])
-    console.log(`cliclou em remover participante ${name}`)
   }
+
+  const currentDate = new Date();
+  const NewDate = format(
+    currentDate,
+    "EEEE',' dd 'de' LLLL Y", {
+    locale: ptBR,
+  }
+  );
+  const formattedDate = NewDate[0].toUpperCase() + NewDate.substr(1)
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.eventName}>Nome do evento</Text>
-        <Text style={styles.dateOfEvent}>Sexta, 4 de Novembro de 2022</Text>
+        <Text style={styles.dateOfEvent}>{formattedDate}</Text>
 
         <View style={styles.form}>
           <TextInput
